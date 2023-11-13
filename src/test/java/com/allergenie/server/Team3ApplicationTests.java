@@ -1,4 +1,4 @@
-package com.allergenie.team3;
+package com.allergenie.server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

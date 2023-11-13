@@ -1,4 +1,4 @@
-package com.allergenie.team3;
+package com.allergenie.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
