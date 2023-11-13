@@ -1,5 +1,6 @@
 # TEAM_3(AllerGenie)
 🍁 2023 단풍톤 3팀의 레포지터리입니다.
+AllerGenie repo TEAM_3 for B-E
 
 ## Commit message Convention
 - feat : 새로운 기능 추가, 기존의 기능을 요구 사항에 맞추어 수정
