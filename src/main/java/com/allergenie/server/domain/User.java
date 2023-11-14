@@ -32,10 +32,6 @@ public class User {
     @NotNull
     private String password;
 
-    @Column(name="kakao_id")
-    private Long kakaoId; // 나중에 삭제 필요
-
-
     @Column
     private String profileImg;
 

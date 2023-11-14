@@ -2,7 +2,6 @@ package com.allergenie.server.config.jwt;
 
 import com.allergenie.server.domain.User;
 import com.allergenie.server.repository.UserRepository;
-import com.allergenie.server.service.CustomOAuthUserService;
 import com.allergenie.server.service.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -27,7 +26,6 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final UserRepository userRepository;
-    private final CustomOAuthUserService customOAuthUserService;
 
     private final RedisService redisService;
     @Value("${spring.jwt.secretKey}")
@@ -120,23 +118,23 @@ public class JwtTokenProvider {
     }
 
 
-    public Authentication getAuthentication(String token) {
-            System.out.println("authentication");
-            UserDetails userDetails = customOAuthUserService.loadUserByUsername(getUserPk(token));
-            System.out.println(userDetails+"getAuthentication");
-            return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+//    public Authentication getAuthentication(String token) {
+//            System.out.println("authentication");
+//            UserDetails userDetails = customOAuthUserService.loadUserByUsername(getUserPk(token));
+//            System.out.println(userDetails+"getAuthentication");
+//            return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+//
+//    }
 
-    }
 
-
-    private boolean userDetailsExists(String token) {
-        try {
-            UserDetails userDetails = customOAuthUserService.loadUserByUsername(getUserPk(token));
-            return userDetails != null; // 정보가 존재하는 경우 true를 반환
-        } catch (UsernameNotFoundException ex) {
-            return false;
-        }
-    }
+//    private boolean userDetailsExists(String token) {
+//        try {
+//            UserDetails userDetails = customOAuthUserService.loadUserByUsername(getUserPk(token));
+//            return userDetails != null; // 정보가 존재하는 경우 true를 반환
+//        } catch (UsernameNotFoundException ex) {
+//            return false;
+//        }
+//    }
 
 
     //토큰에서 사용자의 기본키(이메일) 찾기
