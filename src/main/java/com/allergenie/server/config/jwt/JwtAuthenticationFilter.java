@@ -23,15 +23,7 @@ class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //String token = resolveToken(request.getHeader("Authorization"));// HTTP header에서 token 받아오기
         String token = jwtTokenProvider.resolveToken(request);
-        System.out.println("먼저?" + request);
-        System.out.println("여기서?" + token);
 
-//        final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        log.info("authorization : {}", authorization);
-//
-//        // UserEmail Token에서 꺼내기
-//        String userEmail = jwtTokenProvider.getUserPk(token);
-//        log.info("userEmail: {}", userEmail);
 
         if (token != null) {
             boolean authentication = jwtTokenProvider.validateToken(token);

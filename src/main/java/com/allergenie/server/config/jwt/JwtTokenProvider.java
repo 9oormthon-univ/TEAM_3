@@ -80,32 +80,6 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // 토큰의 유효성 + 만료일자 확인
-//    public Authentication validateToken(HttpServletRequest request, String token) {
-//        System.out.println("토큰 검증 첫번째");
-//        String exception = "exception";
-//        try {
-//            //만료된 액세스 토큰을 확인하기 위함
-//            String expiredAT = redisService.getValues(blackListATPrefix + token);
-//            System.out.println("레디스안에");
-//            if (expiredAT != null) { // redis에 해당 토큰이 저장되어 있으면 만료되었다는 뜻
-//                throw new ExpiredJwtException(null, null, null);
-//            }
-//            // 토큰을 분석하고 서명을 확인하는 절차
-//            // 토큰의 유효성을 확인하는 중요한 절차
-//            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-//            // 유효한 토큰인 경우, 함수를 호출하여 사용자 인증 정보를 얻고 반환한다.
-//            return getAuthentication(token);
-//
-//        } catch (MalformedJwtException | SignatureException | UnsupportedJwtException e) {
-//            request.setAttribute(exception, "토큰의 형식을 확인하세요.");
-//        } catch (ExpiredJwtException e) {
-//            request.setAttribute(exception, "access 토큰이 만료되었습니다.");
-//        } catch (IllegalArgumentException e) {
-//            request.setAttribute(exception, "JWT compact of handler are invalid");
-//        }
-//        return null;
-//    }
 
 
     public boolean validateToken(String jwtToken) {
@@ -117,24 +91,6 @@ public class JwtTokenProvider {
         }
     }
 
-
-//    public Authentication getAuthentication(String token) {
-//            System.out.println("authentication");
-//            UserDetails userDetails = customOAuthUserService.loadUserByUsername(getUserPk(token));
-//            System.out.println(userDetails+"getAuthentication");
-//            return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-//
-//    }
-
-
-//    private boolean userDetailsExists(String token) {
-//        try {
-//            UserDetails userDetails = customOAuthUserService.loadUserByUsername(getUserPk(token));
-//            return userDetails != null; // 정보가 존재하는 경우 true를 반환
-//        } catch (UsernameNotFoundException ex) {
-//            return false;
-//        }
-//    }
 
 
     //토큰에서 사용자의 기본키(이메일) 찾기
