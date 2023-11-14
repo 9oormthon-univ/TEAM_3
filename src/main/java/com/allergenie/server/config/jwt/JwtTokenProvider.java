@@ -124,12 +124,10 @@ public class JwtTokenProvider {
     public User getUserInfoByToken(HttpServletRequest request) {
         String token = resolveToken(request);
         boolean isauthentication = validateToken(token);
-        System.out.println(isauthentication+"^^^^^");
         String email = getUserPk(token);
         if (isauthentication) {
             User user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new UsernameNotFoundException("회원이 존재하지 않습니다."));
-            System.out.println(user.getEmail()+"^^^^");
             return user;
         }
         else {
