@@ -139,10 +139,10 @@ public class JwtTokenProvider {
 
 
     // 클라이언트의 refreshToken 과 서버에 저장된 refreshToken이 같은지 확인한다
-//    public void checkRefreshToken(String userId, String refreshToken) {
-//        String redisRT = redisService.getValues(userId);
-//        if (!refreshToken.equals(redisRT)) { // 일치하지 않는 경우 에러 발생
-//            throw new RefreshTokenExpiredException();
-//        }
-//    }
+    public void checkRefreshToken(String userId, String refreshToken) {
+        String redisRT = redisService.getValues(userId);
+        if (!refreshToken.equals(redisRT)) { // 일치하지 않는 경우 에러 발생
+            throw new RuntimeException(); // 추후 수정
+        }
+    }
 }

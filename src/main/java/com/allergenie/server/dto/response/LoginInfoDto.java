@@ -19,11 +19,11 @@ public class LoginInfoDto {
         this.nickname = nickname;
     }
 
-//    public LoginResDto toLoginResDto() {
-//        return LoginResDto.builder()
-//                .nickname(this.nickname)
-//                .accessToken(this.accessToken)
-//                .refreshToken(this.refreshToken)
-//                .build();
-//    }
+    public LoginResDto toLoginResDto() {
+        return LoginResDto.builder()
+                .nickname(this.nickname)
+                .accessToken(this.accessToken)
+                .refreshToken(this.refreshToken)
+                .build();
+    }
 }

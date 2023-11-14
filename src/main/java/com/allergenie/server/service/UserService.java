@@ -59,19 +59,19 @@ public class UserService {
 
     }
 
-//    public void logout(HttpServletRequest request, String email, String accessToken){
-//        // 로그아웃 하고 싶은 토큰이 유효한 지 먼저 검증하기
-//        boolean authentication = jwtTokenProvider.validateToken(accessToken);
-//        if (!authentication){
-//            System.out.println(accessToken);
-//            throw new IllegalArgumentException("로그아웃 : 유효하지 않은 토큰입니다.");
-//        }
-//        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-//        // 레디스에서 해당 유저의 정보를 삭제
-//        //redisService.deleteValues(user.getEmail()); -> jwtTokenProvider 에서 이미 함
-//        // 해당 Access Token 유효시간을 가지고 와서 BlackList에 저장하기
-//        jwtTokenProvider.logout(email, accessToken);
-//    }
+    public void logout(HttpServletRequest request, String email, String accessToken){
+        // 로그아웃 하고 싶은 토큰이 유효한 지 먼저 검증하기
+        boolean authentication = jwtTokenProvider.validateToken(accessToken);
+        if (!authentication){
+            System.out.println(accessToken);
+            throw new IllegalArgumentException("로그아웃 : 유효하지 않은 토큰입니다.");
+        }
+        User user = userRepository.findByEmail(email).orElseThrow(RuntimeException::new); //추후수정
+        // 레디스에서 해당 유저의 정보를 삭제
+        //redisService.deleteValues(user.getEmail()); -> jwtTokenProvider 에서 이미 함
+        // 해당 Access Token 유효시간을 가지고 와서 BlackList에 저장하기
+        jwtTokenProvider.logout(email, accessToken);
+    }
 
     public ResponseCookie generateCookie(String type, String token)
     {
@@ -88,11 +88,11 @@ public class UserService {
 
     //전달받은 유저의 이메일로 유저가 존재하는지 확인 + refreshtokne이 유효한지 체크
     //accessToken 재생성하여 refreshToken과 함께 응답
-//    public LoginInfoDto reIssueAccessToken(String email, String refreshToken) {
-//        User user = userRepository.findByEmail(email).orElseThrow(RuntimeException::new);//추후수정
-//        jwtTokenProvider.checkRefreshToken(email, refreshToken);
-//        String accessToken = jwtTokenProvider.createAccessToken(user.getEmail(), user.getRole());
-//        return new LoginInfoDto(accessToken, refreshToken, user.getNickname());
-//    }
+    public LoginInfoDto reIssueAccessToken(String email, String refreshToken) {
+        User user = userRepository.findByEmail(email).orElseThrow(RuntimeException::new);//추후수정
+        jwtTokenProvider.checkRefreshToken(email, refreshToken);
+        String accessToken = jwtTokenProvider.createAccessToken(user.getEmail(), user.getRole());
+        return new LoginInfoDto(accessToken, refreshToken, user.getNickname());
+    }
 
 }
