@@ -1,3 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/${DB_NAME}?serverTimezone=Asia/Seoul
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  devtools:
+    livereload:
+      enabled: true
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      org.hibernate.type.descriptor.sql: trace
+    hibernate:
+      ddl-auto: update # 이게 create여서 자꾸 db가 리셋됐음!
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  jwt:
+    secretKey: ${SECRET_KEY}
+    blacklist:
+      access-token: BlackList_AccessToken_
+  redis:
+    host: localhost
+    port: 6379
+  logging:
+    level:
+      root: debug
 
 
 
