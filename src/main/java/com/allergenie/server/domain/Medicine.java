@@ -23,4 +23,6 @@ public class Medicine {
     private String effect;
 
     private String caution;
+
+    private String image;
 }
