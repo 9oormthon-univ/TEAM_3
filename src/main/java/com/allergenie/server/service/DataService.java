@@ -1,5 +1,12 @@
 package com.allergenie.server.service;
 
+import com.allergenie.server.domain.Medicine;
+import com.allergenie.server.repository.MedicineRepository;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +20,7 @@ import java.net.URLEncoder;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class DataService {
     @Value("${api.key.encoded}")
     private String encodedKey;
@@ -20,13 +28,15 @@ public class DataService {
     @Value("${api.baseURL}")
     private String baseURL;
 
+    private final MedicineRepository medicineRepository;
+
     public String getDataList() throws IOException {
         StringBuilder reqURL = new StringBuilder(baseURL);
         reqURL.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + encodedKey);
 
 
         reqURL.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-        reqURL.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과 수*/
+        reqURL.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
 
 //        reqURL.append("&" + URLEncoder.encode("entpName","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*업체명*/
 //        reqURL.append("&" + URLEncoder.encode("itemName", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*제품명*/
@@ -59,23 +69,102 @@ public class DataService {
             br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         }
 
-//        String line = "";
-//        String result = "";
-//        while ((line = br.readLine()) != null) {
-//            result += line;
-//        }
-//        System.out.println(result);
-
-        StringBuilder sb = new StringBuilder();
-        String line;
+        String line = "";
+        String result = "";
         while ((line = br.readLine()) != null) {
-            sb.append(line);
+            result += line;
         }
-        System.out.println(sb.toString());
+        System.out.println(result);
+
+//        StringBuilder sb = new StringBuilder();
+//        String line;
+//        while ((line = br.readLine()) != null) {
+//            sb.append(line);
+//        }
+//        System.out.println(sb.toString());
+
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(result);
+
+        System.out.println(jsonElement);
+
+        JsonObject body = jsonElement.getAsJsonObject().getAsJsonObject("body");
+        System.out.println(body);
+
+        JsonArray items = body.getAsJsonArray("items");
+        System.out.println(items);
+
+        for (JsonElement item : items) {
+            //이름
+            String name = item.getAsJsonObject().get("itemName").getAsString();
+            System.out.println(name);
+
+            //효능
+            JsonElement effectElement = item.getAsJsonObject().get("efcyQesitm");
+            String effect = !effectElement.isJsonNull()
+                    ? effectElement.getAsString()
+                    : null;
+            if (effect != null) {
+                effect = effect.replaceAll("\\n\\n", " ");
+                effect = effect.replaceAll("\\n", " ");
+                if (effect.length() > 256) {
+                    effect = effect.substring(0, 256); // 256자로 자르기
+                    // 마지막 '.' 이후 부분 제거
+                    int lastDotIndex = effect.lastIndexOf('.');
+                    if (lastDotIndex != -1) {
+                        effect = effect.substring(0, lastDotIndex);
+                    }
+                }
+            }
+
+            //주의사항
+            JsonElement cautionElement = item.getAsJsonObject().get("atpnQesitm");
+            String caution = !cautionElement.isJsonNull()
+                    ? cautionElement.getAsString()
+                    : null;
+            if (caution != null) {
+                caution = caution.replaceAll("\\n\\n", " ");
+                caution = caution.replaceAll("\\n", " ");
+                if (caution.length() > 256) {
+                    caution = caution.substring(0, 256); // 256자로 자르기
+                    // 마지막 '.' 이후 부분 제거
+                    int lastDotIndex = caution.lastIndexOf('.');
+                    if (lastDotIndex != -1) {
+                        caution = caution.substring(0, lastDotIndex);
+                    }
+                }
+            }
+
+            //약 사진
+            JsonElement imageElement = item.getAsJsonObject().get("itemImage");
+            String image = !imageElement.isJsonNull()
+                    ? imageElement.getAsString()
+                    : null;
+
+            //부작용
+            JsonElement sideEffectElement = item.getAsJsonObject().get("seQesitm");
+            String sideEffect = !sideEffectElement.isJsonNull()
+                    ? sideEffectElement.getAsString()
+                    : null;
+            if (sideEffect != null) {
+                sideEffect = sideEffect.replaceAll("\\n\\n", " ");
+                sideEffect = sideEffect.replaceAll("\\n", " ");
+                if (sideEffect.length() > 256) {
+                    sideEffect = sideEffect.substring(0, 256); // 256자로 자르기
+                    // 마지막 '.' 이후 부분 제거
+                    int lastDotIndex = sideEffect.lastIndexOf('.');
+                    if (lastDotIndex != -1) {
+                        sideEffect = sideEffect.substring(0, lastDotIndex);
+                    }
+                }
+            }
+
+            medicineRepository.save(Medicine.builder().name(name).effect(effect).caution(caution).build());
+        }
 
         br.close();
         conn.disconnect();
 
-        return sb.toString();
+        return result;
     }
 }
