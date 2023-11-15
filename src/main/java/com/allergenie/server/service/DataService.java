@@ -159,7 +159,9 @@ public class DataService {
                 }
             }
 
-            medicineRepository.save(Medicine.builder().name(name).effect(effect).caution(caution).build());
+            medicineRepository.save(Medicine.builder()
+                    .name(name).effect(effect).caution(caution).image(image)
+                    .build());
         }
 
         br.close();
