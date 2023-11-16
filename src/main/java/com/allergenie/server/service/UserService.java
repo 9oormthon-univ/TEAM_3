@@ -50,7 +50,7 @@ public class UserService {
         return new LoginInfoDto(accessToken, refreshToken, user.getNickname());
     }
 
-    //DB에 있는 비밀번호와 사용자로부터 받은 비밀번호의 일치여부 확인
+    //DB에 있는 비밀번호와 사용자로부터 받은 비밀번호의 일치여부 확인..
     private void checkPassword(String password, String encodedPassword) {
         boolean isSame = passwordEncoder.matches(password, encodedPassword);
         if (!isSame) {
