@@ -34,6 +34,8 @@ jobs:
                   value: ${{ secrets.DB_PASSWORD }}
                 - name: SECRET_KEY
                   value: ${{ secrets.SECRET_KEY }}
+                - name: API_KEY
+                  value: ${{ secrets.API_KEY }}
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
