@@ -30,9 +30,9 @@ spring:
     secretKey: ${SECRET_KEY}
     blacklist:
       access-token: BlackList_AccessToken_
-  redis:
-    host: localhost
-    port: 6379
+#  redis:
+#    host: localhost
+#    port: 6379
   logging:
     level:
       root: debug

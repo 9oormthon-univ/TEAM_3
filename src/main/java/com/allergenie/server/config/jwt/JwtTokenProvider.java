@@ -2,7 +2,7 @@ package com.allergenie.server.config.jwt;
 
 import com.allergenie.server.domain.User;
 import com.allergenie.server.repository.UserRepository;
-import com.allergenie.server.service.RedisService;
+//import com.allergenie.server.service.RedisService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -27,7 +27,7 @@ public class JwtTokenProvider {
 
     private final UserRepository userRepository;
 
-    private final RedisService redisService;
+    //private final RedisService redisService;
     @Value("${spring.jwt.secretKey}")
     private String SECRET_KEY;
 
@@ -63,7 +63,7 @@ public class JwtTokenProvider {
         Long tokenInvalidTime = 1000L * 60 * 60 * 24; // 1d
         String refreshToken = this.createToken(userId, roles, tokenInvalidTime);
         //refresh token은 redis에 저장
-        redisService.setValues(userId, refreshToken, Duration.ofMillis(tokenInvalidTime));
+        //redisService.setValues(userId, refreshToken, Duration.ofMillis(tokenInvalidTime));
         return refreshToken;
     }
 
@@ -109,8 +109,8 @@ public class JwtTokenProvider {
     public void logout(String userId, String accessToken) {
         Date expiration = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(accessToken).getBody().getExpiration();
         long expiredAccessTokenTime = expiration.getTime() - new Date().getTime();
-        redisService.setValues(blackListATPrefix + accessToken, userId, Duration.ofMillis(expiredAccessTokenTime));
-        redisService.deleteValues(userId);
+        //redisService.setValues(blackListATPrefix + accessToken, userId, Duration.ofMillis(expiredAccessTokenTime));
+        //redisService.deleteValues(userId);
     }
 
 
@@ -138,9 +138,9 @@ public class JwtTokenProvider {
 
     // 클라이언트의 refreshToken 과 서버에 저장된 refreshToken이 같은지 확인한다
     public void checkRefreshToken(String userId, String refreshToken) {
-        String redisRT = redisService.getValues(userId);
-        if (!refreshToken.equals(redisRT)) { // 일치하지 않는 경우 에러 발생
-            throw new RuntimeException(); // 추후 수정
-        }
+        //String redisRT = redisService.getValues(userId);
+//        if (!refreshToken.equals(redisRT)) { // 일치하지 않는 경우 에러 발생
+//            throw new RuntimeException(); // 추후 수정
+//        }
     }
 }

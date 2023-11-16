@@ -25,7 +25,7 @@ public class UserService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final RedisService redisService;
+    //private final RedisService redisService;
 
     //회원가입
     @Transactional
