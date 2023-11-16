@@ -32,7 +32,7 @@ public class UserService {
     public User signup(UserFormDto userFormDto){
         //회원정보폼에서 비밀번호를 가져온 후 -> 인코딩해서 다시 userFormDto에 넣음
         userFormDto.setPassword(passwordEncoder.encode(userFormDto.getPassword()));
-        //회원정보폼에서 이메일을 가져온 후 -> 해당 유저 객체를 불러온다.
+        //회원정보폼에서 이메일을 가져온 후 -> 해당 유저 객체를 불러온다
         Optional<User> existingUser = userRepository.findByEmail(userFormDto.getEmail());
         if( existingUser.isPresent()){
             //throw new DuplicateEmailException();
