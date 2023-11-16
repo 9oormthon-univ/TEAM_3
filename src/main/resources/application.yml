@@ -1,0 +1,38 @@
+api:
+  key:
+    encoded: ${API_KEY}
+  baseURL: http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/${DB_NAME}?serverTimezone=Asia/Seoul
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+      org.hibernate.type.descriptor.sql: trace
+
+  devtools:
+    livereload:
+      enabled: true
+
+  jwt:
+    secretKey: ${SECRET_KEY}
+    blacklist:
+      access-token: BlackList_AccessToken_
+  redis:
+    host: localhost
+    port: 6379
+  logging:
+    level:
+      root: debug
