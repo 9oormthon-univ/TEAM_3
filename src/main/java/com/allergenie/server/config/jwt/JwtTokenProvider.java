@@ -124,12 +124,10 @@ public class JwtTokenProvider {
     public User getUserInfoByToken(HttpServletRequest request) {
         String token = resolveToken(request);
         boolean isauthentication = validateToken(token);
-        System.out.println(isauthentication+"^^^^^");
         String email = getUserPk(token);
         if (isauthentication) {
             User user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new UsernameNotFoundException("회원이 존재하지 않습니다."));
-            System.out.println(user.getEmail()+"^^^^");
             return user;
         }
         else {
@@ -139,10 +137,10 @@ public class JwtTokenProvider {
 
 
     // 클라이언트의 refreshToken 과 서버에 저장된 refreshToken이 같은지 확인한다
-//    public void checkRefreshToken(String userId, String refreshToken) {
-//        String redisRT = redisService.getValues(userId);
-//        if (!refreshToken.equals(redisRT)) { // 일치하지 않는 경우 에러 발생
-//            throw new RefreshTokenExpiredException();
-//        }
-//    }
+    public void checkRefreshToken(String userId, String refreshToken) {
+        String redisRT = redisService.getValues(userId);
+        if (!refreshToken.equals(redisRT)) { // 일치하지 않는 경우 에러 발생
+            throw new RuntimeException(); // 추후 수정
+        }
+    }
 }
