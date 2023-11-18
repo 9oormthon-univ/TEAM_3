@@ -8,10 +8,12 @@ import com.allergenie.server.dto.response.LoginInfoDto;
 import com.allergenie.server.repository.ImageRepository;
 import com.allergenie.server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -40,7 +42,7 @@ public class UserService {
         //회원정보폼에서 이메일을 가져온 후 -> 해당 유저 객체를 불러온다
         Optional<User> existingUser = userRepository.findByEmail(userFormDto.getEmail());
         if( existingUser.isPresent()){
-            //throw new DuplicateEmailException();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "사용 중인 이메일입니다.");
         }
         int randomImageValue = new Random().nextInt(9) + 1;
         long imageId = randomImageValue;
