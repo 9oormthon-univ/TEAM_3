@@ -16,7 +16,6 @@ public class UserFormDto {
     private String nickname;
 
     @NotBlank
-    @Email
     private String email;
 
     @NotBlank
