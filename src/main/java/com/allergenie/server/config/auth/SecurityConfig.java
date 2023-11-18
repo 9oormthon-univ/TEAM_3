@@ -67,7 +67,15 @@ public class SecurityConfig {
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/**", "/api/v1/auth/signup/**", "/api/v1/auth/login/**", "/api/v1/auth/logout/**",
                         "/api/v1/auth/reissue", "/api/v1/auth/settings", "/api/v1/auth/certification/**",
-                        "/api/v1/util/**","/api/v1/mypage/**"
+                        "/api/v1/util/**","/api/v1/mypage/**","/swagger-resources",
+                        "/swagger-resources/**",
+                        "/configuration/ui",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**",
+                        /* swagger v3 */
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
