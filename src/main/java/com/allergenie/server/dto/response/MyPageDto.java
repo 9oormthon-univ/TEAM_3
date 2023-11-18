@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class MyPageDto {
+    private String userImageURL;
     private String nickname;
     private String email;
 
@@ -17,6 +18,7 @@ public class MyPageDto {
 
     @Builder
     public MyPageDto(User user, List<ProhibitionDto> prohibitionList) {
+        this.userImageURL = user.getImageUrl();
         this.nickname = user.getNickname();
         this.email = user.getEmail();
         this.prohibitionList = prohibitionList;
