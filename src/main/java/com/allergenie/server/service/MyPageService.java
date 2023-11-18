@@ -1,6 +1,7 @@
 package com.allergenie.server.service;
 
 import com.allergenie.server.domain.Medicine;
+
 import com.allergenie.server.domain.Prohibition;
 import com.allergenie.server.domain.User;
 import com.allergenie.server.dto.response.MedicineInfoDto;

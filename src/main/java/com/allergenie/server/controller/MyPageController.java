@@ -6,6 +6,7 @@ import com.allergenie.server.dto.response.MedicineInfoDto;
 import com.allergenie.server.dto.response.MyPageDto;
 import com.allergenie.server.service.MyPageService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/mypage")
 public class MyPageController {
+
     private final MyPageService myPageService;
     private final JwtTokenProvider jwtTokenProvider;
 

@@ -15,4 +15,6 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
             "ORDER BY CASE WHEN m.name = :search THEN 0 ELSE 1 END, m.name ASC")
     Page<Medicine> findByNameContaining(@Param("search") String search, Pageable pageable);
 
+    Medicine findByMedicineId(Long medicineId);
+
 }
