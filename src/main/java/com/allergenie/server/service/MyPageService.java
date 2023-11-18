@@ -1,39 +1,33 @@
 package com.allergenie.server.service;
-
-import com.allergenie.server.domain.Medicine;
-import com.allergenie.server.dto.request.MedicineReq;
+import com.allergenie.server.domain.Prohibition;
+import com.allergenie.server.domain.User;
+import com.allergenie.server.dto.response.MedicineInfoDto;
+import com.allergenie.server.dto.response.MyPageDto;
+import com.allergenie.server.dto.response.ProhibitionDto;
 import com.allergenie.server.repository.MedicineRepository;
+import com.allergenie.server.repository.ProhibitionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
-@org.springframework.transaction.annotation.Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MyPageService {
-
+    private final ProhibitionRepository prohibitionRepository;
     private final MedicineRepository medicineRepository;
 
-//    @Transactional
-//    public Long deleteScrap(HttpServletRequest httpRequest, CopyReq copyReq) {
-//        User user = jwtTokenProvider.getUserInfoByToken(httpRequest);
-//        Long cardId = copyReq.getCardId();
-//        Card card = cardRepository.findCardById(cardId);
-//
-//        Scrap scrap = scrapRepository.findByUserAndCard(user, card);
-//
-//        if (scrap != null) {
-//            scrap.setDeleteYn(1);
-//            return cardId;
-//        }
-//
-//        return null;
-//    }
-//
-//    @Transactional
-//    public Long deleteMedicine(Long userId, MedicineReq medicineReq){
-//        Medicine medicine = medicineRepository.findByMedicineId(medicineReq.getMedicineId());
-//    }
+    public MyPageDto getMyPage(User user) {
+        List<Prohibition> prohibitionList = prohibitionRepository.findByUser(user);
+        List<ProhibitionDto> prohibitionDtos = prohibitionList.stream()
+                .map(prohibition -> new ProhibitionDto(prohibition.getMedicine()))
+                .toList();
+        return new MyPageDto(user, prohibitionDtos);
+    }
 
+//    public MedicineInfoDto getProhibitionInfo(Long medicineId) {
+//
+//    }
 }
