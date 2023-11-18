@@ -1,6 +1,7 @@
 package com.allergenie.server.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,5 +24,11 @@ public class Prohibition {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Builder
+    public Prohibition(Medicine medicine, User user) {
+        this.medicine = medicine;
+        this.user = user;
+    }
 
 }
