@@ -32,7 +32,7 @@ public class User {
 
     @Column
     @NotNull
-    private Long imageId;
+    private String imageUrl;
 
 
     @Column
@@ -44,12 +44,12 @@ public class User {
 
     //User 클래스의 생성자 역할
     @Builder
-    public User( String nickname, String email, String password, Long imageId) {
+    public User( String nickname, String email, String password, String imageUrl) {
         this.nickname = nickname;
         if(email!=null) this.email = email;
         this.password = password;
         this.deleteFlag = false;
-        this.imageId = imageId;
+        this.imageUrl = imageUrl;
         role = "USER";
     }
 }
