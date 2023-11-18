@@ -45,6 +45,7 @@ public class MyPageController {
     @PostMapping("/delete")
     public ResponseEntity<String> deleteMedicine(@RequestBody MedicineReq medicineReq, HttpServletRequest request){
         User user = jwtTokenProvider.getUserInfoByToken(request);
-//마이페이지서비스.삭제
+        myPageService.deleteMedicine(medicineReq.getMedicineId(), user);
+        return ResponseEntity.status(HttpStatus.OK).body("삭제가 완료되었습니다. ");
     }
 }
