@@ -7,10 +7,9 @@ import com.allergenie.server.dto.response.MyPageDto;
 import com.allergenie.server.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,4 +35,9 @@ public class MyPageController {
 
 
     //약 정보 추가하기
+    @PostMapping("/{medicineId}")
+    public ResponseEntity<Void> addProhibitionInfo(@PathVariable Long medicineId, HttpServletRequest request) {
+        User user = jwtTokenProvider.getUserInfoByToken(request);
+        return myPageService.addProhibitionInfo(medicineId, user);
+    }
 }
