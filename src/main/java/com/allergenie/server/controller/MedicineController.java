@@ -18,7 +18,7 @@ public class MedicineController {
     public MedicineListDto getMedicineListBySearch(
             @RequestParam(name = "search") String search,
             @RequestParam(name = "pageNo") int pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 4);
+        Pageable pageable = PageRequest.of(pageNo, 3);
         return medicineService.getMedicineListBySearch(search, pageable);
     }
 
