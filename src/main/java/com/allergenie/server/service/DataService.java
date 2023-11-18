@@ -104,7 +104,7 @@ public class DataService {
             JsonElement imageElement = item.getAsJsonObject().get("itemImage");
             String image = !imageElement.isJsonNull()
                     ? imageElement.getAsString()
-                    : null;
+                    : "https://i.ibb.co/5Ft7wCj/5.png";
 
             //부작용
             JsonElement sideEffectElement = item.getAsJsonObject().get("seQesitm");
@@ -128,8 +128,8 @@ public class DataService {
         if (jsonAsString != null) {
             jsonAsString = jsonAsString.replaceAll("\\n\\n", " ");
             jsonAsString = jsonAsString.replaceAll("\\n", " ");
-            if (jsonAsString.length() > 256) {
-                jsonAsString = jsonAsString.substring(0, 256); // 256자로 자르기
+            if (jsonAsString.length() > 255) {
+                jsonAsString = jsonAsString.substring(0, 255); // 256자로 자르기
                 // 마지막 '.' 이후 부분 제거
                 int lastDotIndex = jsonAsString.lastIndexOf('.');
                 if (lastDotIndex != -1) {
