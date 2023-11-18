@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 public class MedicineDto {
     private Long medicineId;
     private String name;
+    private String effect;
 
     @Builder
     public MedicineDto(Medicine medicine) {
         this.medicineId = medicine.getMedicineId();
         this.name = medicine.getName();
-
+        this.effect = medicine.getEffect();
     }
 }

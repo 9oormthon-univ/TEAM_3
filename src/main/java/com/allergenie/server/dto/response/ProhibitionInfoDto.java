@@ -1,15 +1,13 @@
 package com.allergenie.server.dto.response;
 
 import com.allergenie.server.domain.Medicine;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MedicineInfoDto {
-    private String userImageURL;
+public class ProhibitionInfoDto {
     private Long medicineId;
     private String image;
     private String name;
@@ -17,8 +15,7 @@ public class MedicineInfoDto {
     private String caution;
 
     @Builder
-    public MedicineInfoDto(String userImageURL, Medicine medicine) {
-        this.userImageURL = userImageURL;
+    public ProhibitionInfoDto(Medicine medicine) {
         this.medicineId = medicine.getMedicineId();
         this.image = medicine.getImage();
         this.name = medicine.getName();
