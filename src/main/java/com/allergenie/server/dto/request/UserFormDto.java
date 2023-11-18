@@ -1,16 +1,15 @@
 package com.allergenie.server.dto.request;
 
+import com.allergenie.server.domain.Image;
 import com.allergenie.server.domain.User;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserFormDto {
     @NotBlank
