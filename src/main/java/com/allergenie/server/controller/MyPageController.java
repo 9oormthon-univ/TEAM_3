@@ -4,6 +4,7 @@ import com.allergenie.server.config.jwt.JwtTokenProvider;
 import com.allergenie.server.domain.User;
 import com.allergenie.server.dto.response.MedicineInfoDto;
 import com.allergenie.server.dto.response.MyPageDto;
+import com.allergenie.server.dto.response.ProhibitionInfoDto;
 import com.allergenie.server.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 
@@ -29,10 +30,9 @@ public class MyPageController {
 
     //약 정보 나타내기
     @GetMapping("/{medicineId}")
-    public MedicineInfoDto getProhibitionInfo(@PathVariable Long medicineId) {
+    public ProhibitionInfoDto getProhibitionInfo(@PathVariable Long medicineId) {
         return myPageService.getProhibitionInfo(medicineId);
     }
-
 
     //약 정보 추가하기
     @PostMapping("/{medicineId}")
