@@ -30,13 +30,13 @@ public class DataService {
 
     private final MedicineRepository medicineRepository;
 
-    public String getDataList() throws IOException {
+    public String getDataList(String pageNo) throws IOException {
         StringBuilder reqURL = new StringBuilder(baseURL);
         reqURL.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + encodedKey);
 
 
-        reqURL.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-        reqURL.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+        reqURL.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8")); /*페이지번호*/
+        reqURL.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
 
 //        reqURL.append("&" + URLEncoder.encode("entpName","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*업체명*/
 //        reqURL.append("&" + URLEncoder.encode("itemName", "UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*제품명*/
@@ -76,13 +76,6 @@ public class DataService {
         }
         System.out.println(result);
 
-//        StringBuilder sb = new StringBuilder();
-//        String line;
-//        while ((line = br.readLine()) != null) {
-//            sb.append(line);
-//        }
-//        System.out.println(sb.toString());
-
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(result);
 
@@ -101,39 +94,11 @@ public class DataService {
 
             //효능
             JsonElement effectElement = item.getAsJsonObject().get("efcyQesitm");
-            String effect = !effectElement.isJsonNull()
-                    ? effectElement.getAsString()
-                    : null;
-            if (effect != null) {
-                effect = effect.replaceAll("\\n\\n", " ");
-                effect = effect.replaceAll("\\n", " ");
-                if (effect.length() > 256) {
-                    effect = effect.substring(0, 256); // 256자로 자르기
-                    // 마지막 '.' 이후 부분 제거
-                    int lastDotIndex = effect.lastIndexOf('.');
-                    if (lastDotIndex != -1) {
-                        effect = effect.substring(0, lastDotIndex);
-                    }
-                }
-            }
+            String effect = this.refineJsonElement(effectElement);
 
             //주의사항
             JsonElement cautionElement = item.getAsJsonObject().get("atpnQesitm");
-            String caution = !cautionElement.isJsonNull()
-                    ? cautionElement.getAsString()
-                    : null;
-            if (caution != null) {
-                caution = caution.replaceAll("\\n\\n", " ");
-                caution = caution.replaceAll("\\n", " ");
-                if (caution.length() > 256) {
-                    caution = caution.substring(0, 256); // 256자로 자르기
-                    // 마지막 '.' 이후 부분 제거
-                    int lastDotIndex = caution.lastIndexOf('.');
-                    if (lastDotIndex != -1) {
-                        caution = caution.substring(0, lastDotIndex);
-                    }
-                }
-            }
+            String caution = this.refineJsonElement(cautionElement);
 
             //약 사진
             JsonElement imageElement = item.getAsJsonObject().get("itemImage");
@@ -143,21 +108,7 @@ public class DataService {
 
             //부작용
             JsonElement sideEffectElement = item.getAsJsonObject().get("seQesitm");
-            String sideEffect = !sideEffectElement.isJsonNull()
-                    ? sideEffectElement.getAsString()
-                    : null;
-            if (sideEffect != null) {
-                sideEffect = sideEffect.replaceAll("\\n\\n", " ");
-                sideEffect = sideEffect.replaceAll("\\n", " ");
-                if (sideEffect.length() > 256) {
-                    sideEffect = sideEffect.substring(0, 256); // 256자로 자르기
-                    // 마지막 '.' 이후 부분 제거
-                    int lastDotIndex = sideEffect.lastIndexOf('.');
-                    if (lastDotIndex != -1) {
-                        sideEffect = sideEffect.substring(0, lastDotIndex);
-                    }
-                }
-            }
+            String sideEffect = this.refineJsonElement(sideEffectElement);
 
             medicineRepository.save(Medicine.builder()
                     .name(name).effect(effect).caution(caution).image(image)
@@ -168,5 +119,24 @@ public class DataService {
         conn.disconnect();
 
         return result;
+    }
+
+    public String refineJsonElement(JsonElement jsonElement) {
+        String jsonAsString = !jsonElement.isJsonNull()
+                ? jsonElement.getAsString()
+                : null;
+        if (jsonAsString != null) {
+            jsonAsString = jsonAsString.replaceAll("\\n\\n", " ");
+            jsonAsString = jsonAsString.replaceAll("\\n", " ");
+            if (jsonAsString.length() > 256) {
+                jsonAsString = jsonAsString.substring(0, 256); // 256자로 자르기
+                // 마지막 '.' 이후 부분 제거
+                int lastDotIndex = jsonAsString.lastIndexOf('.');
+                if (lastDotIndex != -1) {
+                    jsonAsString = jsonAsString.substring(0, lastDotIndex);
+                }
+            }
+        }
+        return jsonAsString;
     }
 }
