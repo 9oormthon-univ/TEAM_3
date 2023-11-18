@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MedicineInfoDto {
+    private String userImageURL;
     private Long medicineId;
     private String image;
     private String name;
@@ -16,7 +17,8 @@ public class MedicineInfoDto {
     private String caution;
 
     @Builder
-    public MedicineInfoDto(Medicine medicine) {
+    public MedicineInfoDto(String userImageURL, Medicine medicine) {
+        this.userImageURL = userImageURL;
         this.medicineId = medicine.getMedicineId();
         this.image = medicine.getImage();
         this.name = medicine.getName();

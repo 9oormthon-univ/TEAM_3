@@ -1,6 +1,7 @@
 package com.allergenie.server.service;
 
 import com.allergenie.server.domain.Medicine;
+import com.allergenie.server.domain.User;
 import com.allergenie.server.dto.response.MedicineDto;
 import com.allergenie.server.dto.response.MedicineInfoDto;
 import com.allergenie.server.dto.response.MedicineListDto;
@@ -19,16 +20,16 @@ import org.springframework.web.server.ResponseStatusException;
 public class MedicineService {
     private final MedicineRepository medicineRepository;
 
-    public MedicineListDto getMedicineListBySearch(String search, Pageable pageable) {
+    public MedicineListDto getMedicineListBySearch(User user, String search, Pageable pageable) {
         Page<Medicine> searchedMedicines = medicineRepository.findByNameContaining(search, pageable);
         Page<MedicineDto> medicineDtos = searchedMedicines.map(MedicineDto::new);
-        return new MedicineListDto(medicineDtos.getTotalPages(), medicineDtos.getNumber(), medicineDtos.getContent());
+        return new MedicineListDto(medicineDtos.getTotalPages(), medicineDtos.getNumber(), user.getImageUrl(), medicineDtos.getContent());
     }
 
-    public MedicineInfoDto getMedicineInfo(Long medicineId) {
+    public MedicineInfoDto getMedicineInfo(User user, Long medicineId) {
         Medicine medicine = medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return new MedicineInfoDto(medicine);
+        return new MedicineInfoDto(user.getImageUrl(), medicine);
     }
 
 }
