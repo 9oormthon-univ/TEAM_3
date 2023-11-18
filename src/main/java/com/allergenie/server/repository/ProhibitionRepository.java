@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface ProhibitionRepository extends JpaRepository<Prohibition, Long> {
     List<Prohibition> findByUser(User user);
+    Prohibition findByUserAndMedicine(User user, Medicine medicine);
 }

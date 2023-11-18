@@ -48,4 +48,17 @@ public class MyPageService {
                 .build());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    public ResponseEntity<Void> deleteMedicine(Long medicineId, User user){
+        Medicine medicine = medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "약 정보를 찾을 수 없습니다"));
+//프로히비션 딜리드 yn
+        Prohibition prohibition =prohibitionRepository.findByUserAndMedicine(user, medicine);
+
+        if(prohibition != null){
+            prohibition.setDeleteYn(1);
+        }
+        return null;
+
+    }
 }
