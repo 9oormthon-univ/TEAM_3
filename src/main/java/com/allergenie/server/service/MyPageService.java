@@ -11,6 +11,7 @@ import com.allergenie.server.repository.MedicineRepository;
 import com.allergenie.server.repository.ProhibitionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,5 +37,14 @@ public class MyPageService {
         Medicine medicine = medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "약 정보를 찾을 수 없습니다"));
         return new MedicineInfoDto(medicine);
+    }
+
+    public ResponseEntity<Void> addProhibitionInfo(Long medicineId, User user) {
+        Medicine medicine = medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "약 정보를 찾을 수 없습니다"));
+        prohibitionRepository.save(Prohibition.builder()
+                .medicine(medicine).user(user)
+                .build());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
