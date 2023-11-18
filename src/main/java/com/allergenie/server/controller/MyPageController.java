@@ -2,6 +2,7 @@ package com.allergenie.server.controller;
 
 import com.allergenie.server.config.jwt.JwtTokenProvider;
 import com.allergenie.server.domain.User;
+import com.allergenie.server.dto.request.MedicineReq;
 import com.allergenie.server.dto.response.MedicineInfoDto;
 import com.allergenie.server.dto.response.MyPageDto;
 import com.allergenie.server.dto.response.ProhibitionInfoDto;
@@ -39,5 +40,11 @@ public class MyPageController {
     public ResponseEntity<Void> addProhibitionInfo(@PathVariable Long medicineId, HttpServletRequest request) {
         User user = jwtTokenProvider.getUserInfoByToken(request);
         return myPageService.addProhibitionInfo(medicineId, user);
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteMedicine(@RequestBody MedicineReq medicineReq, HttpServletRequest request){
+        User user = jwtTokenProvider.getUserInfoByToken(request);
+//마이페이지서비스.삭제
     }
 }
