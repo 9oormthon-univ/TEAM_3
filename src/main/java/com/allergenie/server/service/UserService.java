@@ -1,9 +1,11 @@
 package com.allergenie.server.service;
 
 import com.allergenie.server.config.jwt.JwtTokenProvider;
+import com.allergenie.server.domain.Image;
 import com.allergenie.server.domain.User;
 import com.allergenie.server.dto.request.UserFormDto;
 import com.allergenie.server.dto.response.LoginInfoDto;
+import com.allergenie.server.repository.ImageRepository;
 import com.allergenie.server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -22,6 +25,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
+
+    private final ImageRepository imageRepository;
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -37,7 +42,18 @@ public class UserService {
         if( existingUser.isPresent()){
             //throw new DuplicateEmailException();
         }
-        User user = userRepository.save(userFormDto.toEntity());
+        int randomImageValue = new Random().nextInt(9) + 1;
+        long imageId = randomImageValue;
+        Image image = imageRepository.findByImageId(imageId);
+
+        // 사용자 객체 생성
+        User user = userFormDto.toEntity();
+
+        // 이미지 값을 사용자 객체에 설정
+        user.setImage(image);
+
+
+        user = userRepository.save(user);
         return user;
     }
 

@@ -1,16 +1,14 @@
 package com.allergenie.server.domain;
 
 import com.sun.istack.NotNull;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Getter
+@Setter
 @Where(clause = "delete_flag=0")
 @Entity
 @Table(name = "user")
