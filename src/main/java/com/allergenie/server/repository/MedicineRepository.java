@@ -13,7 +13,7 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
     @Query("SELECT m FROM Medicine m " +
             "WHERE m.name LIKE CONCAT('%', :search, '%') " +
             "ORDER BY CASE WHEN m.name = :search THEN 0 ELSE 1 END, m.name ASC")
-    Page<Medicine> findByNameContaining(@Param("search") String search, Pageable pageable);
+    Page<Medicine> findByName(@Param("search") String search, Pageable pageable);
 
     Medicine findByMedicineId(Long medicineId);
 
