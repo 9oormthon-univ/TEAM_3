@@ -13,7 +13,6 @@ public class MedicineInfoDto {
     private String image;
     private String name;
     private String effect;
-//    private String sideEffect;
     private String caution;
 
     @Builder
@@ -22,7 +21,6 @@ public class MedicineInfoDto {
         this.image = medicine.getImage();
         this.name = medicine.getName();
         this.effect = medicine.getEffect();
-//        this.sideEffect
         this.caution = medicine.getCaution();
     }
 }
