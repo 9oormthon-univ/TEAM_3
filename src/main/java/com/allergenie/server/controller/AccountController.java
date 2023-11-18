@@ -68,4 +68,10 @@ public class AccountController {
         return new ResponseEntity<LoginResDto>(responseDto.toLoginResDto(), responseHeaders, HttpStatus.OK);
 
     }
+
+    @GetMapping("/token")
+    public ResponseEntity<String > validateToken(HttpServletRequest request){
+        User user = jwtTokenProvider.getUserInfoByToken(request);
+        return ResponseEntity.status(HttpStatus.OK).body(user.getEmail());
+    }
 }
