@@ -17,8 +17,5 @@ public class Image {
     private Long imageId;
 
     @Column
-    private String name;
-
-    @Column
     private String imageUrl;
 }
