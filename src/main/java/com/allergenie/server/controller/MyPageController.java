@@ -6,10 +6,11 @@ import com.allergenie.server.dto.response.MedicineInfoDto;
 import com.allergenie.server.dto.response.MyPageDto;
 import com.allergenie.server.service.MyPageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,10 +29,10 @@ public class MyPageController {
     }
 
     //약 정보 나타내기
-//    @GetMapping("/{medicineId}")
-//    public MedicineInfoDto getProhibitionInfo() {
-//        return myPageService.getProhibitionInfo(medicineId);
-//    }
+    @GetMapping("/{medicineId}")
+    public MedicineInfoDto getProhibitionInfo(@PathVariable Long medicineId) {
+        return myPageService.getProhibitionInfo(medicineId);
+    }
 
 
     //약 정보 추가하기

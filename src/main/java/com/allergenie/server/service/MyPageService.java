@@ -1,4 +1,7 @@
 package com.allergenie.server.service;
+
+import com.allergenie.server.domain.Medicine;
+
 import com.allergenie.server.domain.Prohibition;
 import com.allergenie.server.domain.User;
 import com.allergenie.server.dto.response.MedicineInfoDto;
@@ -7,8 +10,10 @@ import com.allergenie.server.dto.response.ProhibitionDto;
 import com.allergenie.server.repository.MedicineRepository;
 import com.allergenie.server.repository.ProhibitionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -27,7 +32,9 @@ public class MyPageService {
         return new MyPageDto(user, prohibitionDtos);
     }
 
-//    public MedicineInfoDto getProhibitionInfo(Long medicineId) {
-//
-//    }
+    public MedicineInfoDto getProhibitionInfo(Long medicineId) {
+        Medicine medicine = medicineRepository.findById(medicineId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "약 정보를 찾을 수 없습니다"));
+        return new MedicineInfoDto(medicine);
+    }
 }
