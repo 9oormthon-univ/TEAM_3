@@ -13,7 +13,7 @@ public class ProhibitionDto {
 
     @Builder
     public ProhibitionDto(Medicine medicine) {
-        this.medicineId = medicine.getId();
+        this.medicineId = medicine.getMedicineId();
         this.name = medicine.getName();
     }
 }

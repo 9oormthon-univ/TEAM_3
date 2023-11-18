@@ -13,7 +13,7 @@ public class MedicineDto {
 
     @Builder
     public MedicineDto(Medicine medicine) {
-        this.medicineId = medicine.getId();
+        this.medicineId = medicine.getMedicineId();
         this.name = medicine.getName();
 
     }

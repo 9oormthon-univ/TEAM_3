@@ -17,7 +17,7 @@ public class MedicineInfoDto {
 
     @Builder
     public MedicineInfoDto(Medicine medicine) {
-        this.medicineId = medicine.getId();
+        this.medicineId = medicine.getMedicineId();
         this.image = medicine.getImage();
         this.name = medicine.getName();
         this.effect = medicine.getEffect();
