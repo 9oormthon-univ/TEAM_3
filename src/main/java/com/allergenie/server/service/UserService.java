@@ -50,7 +50,7 @@ public class UserService {
         User user = userFormDto.toEntity();
 
         // 이미지 값을 사용자 객체에 설정
-        user.setImage(image);
+        user.setImageId(imageId);
 
 
         user = userRepository.save(user);

@@ -30,9 +30,10 @@ public class User {
     @NotNull
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id")
-    private Image image;
+    @Column
+    @NotNull
+    private Long imageId;
+
 
     @Column
     private String role;
@@ -43,12 +44,12 @@ public class User {
 
     //User 클래스의 생성자 역할
     @Builder
-    public User( String nickname, String email, String password, Image image) {
+    public User( String nickname, String email, String password, Long imageId) {
         this.nickname = nickname;
         if(email!=null) this.email = email;
         this.password = password;
         this.deleteFlag = false;
-        this.image = image;
+        this.imageId = imageId;
         role = "USER";
     }
 }
