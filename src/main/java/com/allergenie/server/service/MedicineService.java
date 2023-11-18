@@ -21,7 +21,7 @@ public class MedicineService {
     private final MedicineRepository medicineRepository;
 
     public MedicineListDto getMedicineListBySearch(User user, String search, Pageable pageable) {
-        Page<Medicine> searchedMedicines = medicineRepository.findByNameContaining(search, pageable);
+        Page<Medicine> searchedMedicines = medicineRepository.findByName(search, pageable);
         Page<MedicineDto> medicineDtos = searchedMedicines.map(MedicineDto::new);
         return new MedicineListDto(medicineDtos.getTotalPages(), medicineDtos.getNumber(), user.getImageUrl(), medicineDtos.getContent());
     }

@@ -22,7 +22,7 @@ public class MedicineController {
     @GetMapping
     public MedicineListDto getMedicineListBySearch(
             @RequestParam(name = "search") String search,
-            @RequestParam(name = "pageNo") int pageNo,
+            @RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
             HttpServletRequest request) {
         User user = jwtTokenProvider.getUserInfoByToken(request);
         Pageable pageable = PageRequest.of(pageNo, 3);
