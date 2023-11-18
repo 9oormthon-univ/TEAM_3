@@ -1,15 +1,13 @@
 package com.allergenie.server.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Getter
+@Setter
 @Entity
 @Table(name = "prohibition")
 @Where(clause = "delete_yn = 0")
