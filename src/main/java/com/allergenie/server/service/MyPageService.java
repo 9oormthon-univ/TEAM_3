@@ -7,6 +7,7 @@ import com.allergenie.server.domain.User;
 import com.allergenie.server.dto.response.MedicineInfoDto;
 import com.allergenie.server.dto.response.MyPageDto;
 import com.allergenie.server.dto.response.ProhibitionDto;
+import com.allergenie.server.dto.response.ProhibitionInfoDto;
 import com.allergenie.server.repository.MedicineRepository;
 import com.allergenie.server.repository.ProhibitionRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +34,10 @@ public class MyPageService {
         return new MyPageDto(user, prohibitionDtos);
     }
 
-    public MedicineInfoDto getProhibitionInfo(Long medicineId) {
+    public ProhibitionInfoDto getProhibitionInfo(Long medicineId) {
         Medicine medicine = medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "약 정보를 찾을 수 없습니다"));
-        return new MedicineInfoDto(medicine);
+        return new ProhibitionInfoDto(medicine);
     }
 
     public ResponseEntity<Void> addProhibitionInfo(Long medicineId, User user) {
