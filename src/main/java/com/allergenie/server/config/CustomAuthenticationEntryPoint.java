@@ -16,11 +16,12 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
+        System.out.println("x-requested-with: " + request.getHeader("x-requested-with"));
         if ("XMLHttpRequest".equals(request.getHeader("x-requested-with"))) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         } else {
             //가입되지 않은 사용자의 접근
-            response.sendRedirect("/auth/login");
+            response.sendRedirect("/api/v1/auth/login");
         }
     }
 
